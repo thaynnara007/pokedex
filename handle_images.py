@@ -2,7 +2,7 @@ import os, PIL
 from PIL import Image
 from os import listdir
 
-PATH = "data/dataset/aatest"
+PATH = "data/"
 ROOT = os.getcwd()
 
 def handle_prictures(directories, path):
@@ -18,7 +18,7 @@ def handle_prictures(directories, path):
       
       print (img)
       image = Image.open(img)
-      newImage = image.resize((100,100), Image.ANTIALIAS)
+      newImage = image.resize((256,256), Image.ANTIALIAS)
       newImage.save(img, optimize=True, quality=95)
 
       picture = Image.open(img)
@@ -32,7 +32,7 @@ def handle_prictures(directories, path):
    
 def main():
 
-  path = input("Type the path from the files, if any path is type it will be set to the default one, which is {}:".format(PATH))
+  path = input("Type the directory from the files, if any directory is type it will be set to the default one, which is {}:".format(PATH))
   if (len(path)== 0): path = PATH
   directories = listdir(path)
 

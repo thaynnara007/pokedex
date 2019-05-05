@@ -7,7 +7,7 @@ ap.add_argument('-q','--query', required=True, help="Search query to search Bing
 ap.add_argument('-o', '--output', required=True, help='path to output directory images')
 args = vars(ap.parse_args())
 
-API_KEY = "bb23973fe8cf4cb1bcc457a8e1d7f849"
+API_KEY = os.environ.get("BING_API_KEY")
 MAX_RESULTS = 300
 GROUP_SIZE = 50
 URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"

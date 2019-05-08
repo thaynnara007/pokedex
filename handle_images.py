@@ -18,7 +18,7 @@ def handle_prictures(directories, path):
       
       print ("[INFO] image: {}".format(img))
       image = Image.open(img)
-      newImage = image.resize((256,256), Image.ANTIALIAS)
+      newImage = image.resize((224,224), Image.ANTIALIAS)
       newImage.save(img, optimize=True, quality=95)
 
       picture = Image.open(img)
@@ -33,7 +33,7 @@ def handle_prictures(directories, path):
       for angle in [45,135,225,315]:
         name = 'rotated{}_{}'.format(angle, img)
         image = Image.open(name)
-        new_image = image.resize((256,256), Image.ANTIALIAS)
+        new_image = image.resize((224,224), Image.ANTIALIAS)
         new_image.save(name, optimize=True, quality=95)  
    
 def main():

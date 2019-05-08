@@ -26,22 +26,22 @@ class SmallerVGGNet:
     #adding layes
     # convolution -> ReLu -> Pooling
     # 32 filters with 3x3 features
-    model.add(Conv2D(32,(3,3), padding="same", input_shape=inputShape))
+    model.add(Conv2D(32,(3,3), padding="same", input_shape=inputShape)) # 96 x 96 x 3
     model.add(Activation("relu"))
     model.add(BatchNormalization(axis=chanDim))
     model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Dropout(0.25))
     # Convolution -> ReLu -> Convolution -> ReLu -> Pooling
-    model.add(Conv2D(64, (3,3), padding='same'))
+    model.add(Conv2D(64, (3,3), padding='same')) # 48 x48 x 64 
     model.add(Activation('relu'))
     model.add(BatchNormalization(axis=chanDim))
-    model.add(Conv2D(64, (3,3), padding='same'))
+    model.add(Conv2D(64, (3,3), padding='same')) 
     model.add(Activation('relu'))
     model.add(BatchNormalization(axis=chanDim))
     model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Dropout(0.25))
     # Convolution -> ReLu -> Convolution -> ReLu -> Pooling
-    model.add(Conv2D(128, (3,3), padding="same"))
+    model.add(Conv2D(128, (3,3), padding="same")) # 24 x 24 x 128
     model.add(Activation('relu'))
     model.add(BatchNormalization(axis=chanDim))
     model.add(Conv2D(128, (3,3), padding='same'))

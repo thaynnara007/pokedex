@@ -90,9 +90,10 @@ file.close()
 
 # plot the training loss and accuracy
 plt.style.use('ggplot')
-plt.figure()
 N = EPOCHS
 arange = np.arange(0, N)
+
+plt.figure()
 plt.plot(arange, H.history['loss'], label='train_loss')
 plt.plot(arange, H.history['acc'], label='train_acc')
 plt.title('Training Loss and Accuracy')

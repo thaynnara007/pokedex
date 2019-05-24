@@ -5,7 +5,7 @@ import argparse
 response = google_images_download.googleimagesdownload()
 
 ap = argparse.ArgumentParser("search for images on google by some queries")
-ap.add_argument('-q','--query', nargs='+', help='<Required> Set flag', required=True)
+ap.add_argument('-q','--query', nargs='+', help='Search query', required=True)
 args = vars(ap.parse_args())
 
 search_queries = args['query']

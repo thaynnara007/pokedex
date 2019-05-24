@@ -1,6 +1,6 @@
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image, ImageFont, ImageDraw, ImageOps
 import numpy as np
 import argparse
 import imutils
@@ -16,6 +16,7 @@ args = vars(ap.parse_args())
 
 print ("[INFO] loading image...")
 image = cv2.imread(args["image"])
+image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 img = Image.open(args['image'])
 output = img.copy()
 # pre-process the image for classification

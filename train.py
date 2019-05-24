@@ -6,6 +6,7 @@ from keras.optimizers import Adam
 from keras.preprocessing.image import img_to_array
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
 from pyimagesearch.smallervggnet import SmallerVGGNet
 from imutils import paths
 import matplotlib.pyplot as plt
@@ -23,14 +24,15 @@ ap.add_argument('-l', '--labelbin', required=True, help="path to output label bi
 ap.add_argument('-p1', '--plot1', type=str, default='plot1.png', help='path to output accuracy/loss plot')
 ap.add_argument('-p2', '--plot2', type=str, default='plot2.png', help='path to output accuracy/loss plot')
 ap.add_argument('-p3', '--plot3', type=str, default='plot3.png', help='path to output accuracy/loss plot')
+ap.add_argument('-p4', '--plot4', type=str, default='plot4.png', help='path to output accuracy/loss plot')
 args = vars(ap.parse_args())
 
 ''' initialize the number of epochs to train for, initial learning rate,
  batch size, and image dimensions '''
-EPOCHS = 100
+EPOCHS = 50
 INIT_LR = 1e-3 # the default value for the Adam optimizer
 BS = 32
-IMAGE_DIMS = (96,96,3)
+IMAGE_DIMS = (96,96,1)
 
 data = []
 labels = []
@@ -43,7 +45,8 @@ random.shuffle(imagePaths)
 for imagePath in imagePaths:
 
   image = cv2.imread(imagePath)
-  image = cv2.resize(image, (IMAGE_DIMS[1], IMAGE_DIMS[0]))
+  gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+  image = cv2.resize(gray, (IMAGE_DIMS[1], IMAGE_DIMS[0]))
   image = img_to_array(image)
   data.append(image)
 
@@ -63,7 +66,7 @@ labels = lb.fit_transform(labels)
 (train_x, test_x, train_y, test_y) = train_test_split(data, labels, test_size=0.2, random_state=42)
 
 # construct the image generator for data augmentation
-augmentation = ImageDataGenerator(rotation_range=25, width_shift_range=0.1,
+augmentation = ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
 height_shift_range=0.1, shear_range=0.2, zoom_range=0.2, horizontal_flip=True, 
 fill_mode='nearest')
 
@@ -75,8 +78,7 @@ model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy
 
 print("[INFO] training network...")
 H = model.fit_generator(augmentation.flow(train_x, train_y, batch_size=BS),
-validation_data=(test_x,test_y), steps_per_epoch=(len(train_x) // BS),
-epochs=EPOCHS, verbose=1)
+validation_data=(test_x,test_y),steps_per_epoch=len(train_x) // BS, epochs=EPOCHS, verbose=1)
 
 # saving the model to disk
 print("[INFO] serializing network...")
@@ -88,7 +90,7 @@ file = open(args['labelbin'], 'wb')
 file.write(pickle.dumps(lb))
 file.close()
 
-# plot the training loss and accuracy
+print('[INFO] plot the training loss and accuracy...')
 plt.style.use('ggplot')
 N = EPOCHS
 arange = np.arange(0, N)
@@ -112,6 +114,15 @@ plt.legend(loc='upper left')
 plt.savefig(args['plot2'])
 
 plt.figure()
+plt.plot(arange, H.history['loss'], label='train_loss')
+plt.plot(arange, H.history['val_loss'], label='val_loss')
+plt.title('Test Loss and Train Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss/Accuracy')
+plt.legend(loc='upper left')
+plt.savefig(args['plot3'])
+
+plt.figure()
 plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
 plt.plot(np.arange(0, N), H.history["acc"], label="train_acc")
@@ -120,7 +131,15 @@ plt.title("All Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="upper left")
-plt.savefig(args["plot3"])
+plt.savefig(args["plot4"])
+
+print('[INFO] confusion matriz...')
+predictions = model.predict(test_x)
+test_y_matriz = [np.argmax(t) for t in test_y]
+predictions_y_matriz = [np.argmax(t) for t in predictions]
+confusion = confusion_matrix(test_y_matriz, predictions_y_matriz)
+print(confusion)
+
 
 
 

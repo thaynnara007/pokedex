@@ -17,9 +17,9 @@ def handle_prictures(directories, path):
     for img in listdir(os.getcwd()):
       
       print ("[INFO] image: {}".format(img))
-      image = Image.open(img)
-      newImage = image.resize((224,224), Image.ANTIALIAS)
-      newImage.save(img, optimize=True, quality=95)
+      #image = Image.open(img)
+      #newImage = image.resize((224,224), Image.ANTIALIAS)
+      #newImage.save(img, optimize=True, quality=95)
 
       picture = Image.open(img)
       picture.rotate(45, expand=True).save('rotated{}_{}'.format('45',img))
@@ -29,12 +29,12 @@ def handle_prictures(directories, path):
       picture.rotate(225, expand=True).save('rotated{}_{}'.format('225',img))
       picture.rotate(270, expand=True).save('rotated{}_{}'.format('270',img), optimize=True, quality=95)
       picture.rotate(315, expand=True).save('rotated{}_{}'.format('315',img))
-
+      '''
       for angle in [45,135,225,315]:
         name = 'rotated{}_{}'.format(angle, img)
         image = Image.open(name)
         new_image = image.resize((224,224), Image.ANTIALIAS)
-        new_image.save(name, optimize=True, quality=95)  
+        new_image.save(name, optimize=True, quality=95)  '''
    
 def main():
 

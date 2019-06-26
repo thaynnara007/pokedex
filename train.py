@@ -7,7 +7,7 @@ from keras.preprocessing.image import img_to_array
 from sklearn.preprocessing import LabelBinarizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
-from pyimagesearch.smallervggnet import SmallerVGGNet
+from neuralNetwork.smallervggnet import SmallerVGGNet
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
@@ -29,7 +29,7 @@ args = vars(ap.parse_args())
 
 ''' initialize the number of epochs to train for, initial learning rate,
  batch size, and image dimensions '''
-EPOCHS = 50
+EPOCHS = 100
 INIT_LR = 1e-3 # the default value for the Adam optimizer
 BS = 32
 IMAGE_DIMS = (96,96,1)
@@ -39,7 +39,7 @@ labels = []
 
 print ("[INFO] loading images...")
 imagePaths = sorted(list(paths.list_images(args['dataset'])))
-random.seed(42)
+random.seed(69)
 random.shuffle(imagePaths)
 
 for imagePath in imagePaths:
@@ -66,7 +66,7 @@ labels = lb.fit_transform(labels)
 (train_x, test_x, train_y, test_y) = train_test_split(data, labels, test_size=0.2, random_state=42)
 
 # construct the image generator for data augmentation
-augmentation = ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
+augmentation = ImageDataGenerator(rotation_range=20, width_shift_range=0.1,
 height_shift_range=0.1, shear_range=0.2, zoom_range=0.2, horizontal_flip=True, 
 fill_mode='nearest')
 
@@ -78,7 +78,7 @@ model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy
 
 print("[INFO] training network...")
 H = model.fit_generator(augmentation.flow(train_x, train_y, batch_size=BS),
-validation_data=(test_x,test_y),steps_per_epoch=len(train_x) // BS, epochs=EPOCHS, verbose=1)
+validation_data=(test_x,test_y),steps_per_epoch=(len(train_x) // BS), epochs=EPOCHS, verbose=1)
 
 # saving the model to disk
 print("[INFO] serializing network...")

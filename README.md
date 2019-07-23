@@ -1,6 +1,6 @@
 # Pokedex
 
-Pokedex it's going to be a artificial intelligence that has as goal recognizing some pokemons images.
+Pokedex it's a artificial intelligence that has as goal recognizing some pokemons images.
 
 > This is a project that was developed for Inteligência Artificial course from UFCG
 
@@ -47,7 +47,7 @@ $ python3 train.py --help
 ### Classification
 
 - Here there are some examples of successful images classification
-- There is more examples of classification in examples package
+- There are more examples of classification in examples package
 - Pikachu
  ![pikachu](https://github.com/thaynnara007/pokedex/blob/master/examples/pikachu.png)
 - Charmander

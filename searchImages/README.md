@@ -14,6 +14,6 @@ $ python3 search_on_google.py  --query "bulbasaur" "bulbasaur fanart" --limit 10
 
 > search_bing_api.py
 ```shell
-$python3 search_bing_api.py --query "bulbasaur" --output datasert/bulbasaur --limit 300
+$ python3 search_bing_api.py --query "bulbasaur" --output dataset/bulbasaur --limit 300
 ```
 

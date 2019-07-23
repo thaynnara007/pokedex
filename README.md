@@ -8,9 +8,9 @@ Pokedex it's a artificial intelligence that has as goal recognizing some pokemon
 
 ## Usage
 
-- The model produced can recognize among seven pokemons, which are: pikachu, charmander, squirtle, bulbasaur, cyndaquil, totodile and chikorita.
+- The model produced can classify seven pokemons, which are: pikachu, charmander, squirtle, bulbasaur, cyndaquil, totodile and chikorita.
 - The searchimages package has some scripts that can be used for collecting images for the dataset.
-- Since the trained model is to big for a commit , it will be find on google drive.
+- Since the trained model is too big for a commit , it will be find on google drive.
 - [Trained model](https://drive.google.com/file/d/1DA2EeCIO4FF8kHjEIJm82oFO_K7hvA-r/view?usp=sharing)
 
 > To classify images

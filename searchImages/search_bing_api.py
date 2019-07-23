@@ -5,10 +5,11 @@ from requests import exceptions
 ap = argparse.ArgumentParser("Search images to build a dataset of pokemons")
 ap.add_argument('-q','--query', required=True, help="Search query to search Bing Image API for")
 ap.add_argument('-o', '--output', required=True, help='path to output directory images')
+ap.add_argument('-l', '--limit', required=True, help="limit of images per query")
 args = vars(ap.parse_args())
 
 API_KEY = os.environ.get("BING_API_KEY")
-MAX_RESULTS = 300
+MAX_RESULTS = args['limit']
 GROUP_SIZE = 50
 URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
 

@@ -29,7 +29,7 @@ args = vars(ap.parse_args())
 
 ''' initialize the number of epochs to train for, initial learning rate,
  batch size, and image dimensions '''
-EPOCHS = 100
+EPOCHS = 130
 INIT_LR = 1e-3 # the default value for the Adam optimizer
 BS = 32
 IMAGE_DIMS = (96,96,1)
@@ -57,7 +57,6 @@ print('[INFO] scale the raw pixels intensities to the range [0,1]...')
 data = np.array(data, dtype=float)
 data = data / 255.0
 labels =  np.array(labels)
-print ("[INFO] data matrix: {:.2f}MB".format(data.nbytes / (1024*1000.0)))
 
 print ("[INFO] binarizing the labels...")
 lb = LabelBinarizer()
@@ -65,7 +64,7 @@ labels = lb.fit_transform(labels)
 
 (train_x, test_x, train_y, test_y) = train_test_split(data, labels, test_size=0.2, random_state=42)
 
-# construct the image generator for data augmentation
+
 augmentation = ImageDataGenerator(rotation_range=20, width_shift_range=0.1,
 height_shift_range=0.1, shear_range=0.2, zoom_range=0.2, horizontal_flip=True, 
 fill_mode='nearest')
@@ -80,11 +79,11 @@ print("[INFO] training network...")
 H = model.fit_generator(augmentation.flow(train_x, train_y, batch_size=BS),
 validation_data=(test_x,test_y),steps_per_epoch=(len(train_x) // BS), epochs=EPOCHS, verbose=1)
 
-# saving the model to disk
+
 print("[INFO] serializing network...")
 model.save(args['model'])
 
-#saving the label binarizer to disk
+
 print("[INFO] serializing label binarizer...")
 file = open(args['labelbin'], 'wb')
 file.write(pickle.dumps(lb))

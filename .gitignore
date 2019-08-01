@@ -111,3 +111,4 @@ venv.bak/
 #others
 .vscode
 dataset/
+pokedex.model

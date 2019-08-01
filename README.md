@@ -14,6 +14,25 @@ Pokedex it's a artificial intelligence that has as goal recognizing some pokemon
 - The model was trained with a dataset of about 8490 images.
 - [Trained model](https://drive.google.com/file/d/1DA2EeCIO4FF8kHjEIJm82oFO_K7hvA-r/view?usp=sharing)
 
+### Set up
+
+> Creating the virtual environment
+```shell
+$ python -m venv pokevenv
+
+```
+> Install dependencies
+```shell
+$ pip install -r requirements.txt
+```
+
+> Activating virtual envrionment
+```shell
+$ . pokevenv/bin/activate
+```
+
+### Using
+
 > To classify images
 ```shell
 $ python3 classifier.py --model path_to_pokedex.model --labelbin lb.pickle --image examples/pikachu1.jpeg
